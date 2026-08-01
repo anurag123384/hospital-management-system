@@ -15,59 +15,78 @@ import prescriptionRoutes from "./routes/prescriptionRoutes.js";
 import billRoutes from "./routes/billRoutes.js";
 
 
-// Load env
+// Load environment variables
 dotenv.config();
 
 
 const app = express();
 
 
-// Connect Database
+// Database Connection
 console.log("🔗 Connecting to MongoDB...");
 
 connectDB();
 
 
 
-// Middleware
+// CORS Configuration
 
 app.use(
   cors({
 
-    origin:[
+    origin: [
       "http://localhost:5173",
-      "https://your-vercel-app.vercel.app"
+      "https://hospital-management-system-rho-navy.vercel.app"
     ],
 
-    credentials:true,
+    credentials: true,
+
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS"
+    ],
+
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization"
+    ]
 
   })
 );
 
 
 
+
+// Middlewares
+
 app.use(express.json());
 
-app.use(express.urlencoded({
-  extended:true
-}));
+app.use(
+  express.urlencoded({
+    extended:true
+  })
+);
 
 app.use(cookieParser());
 
 
 
 
-// Test Route
+// Test API
 
 app.get("/",(req,res)=>{
 
-res.json({
+  res.json({
 
-success:true,
+    success:true,
 
-message:"Hospital Management API Running 🚀"
+    message:"Hospital Management API Running 🚀"
 
-});
+  });
 
 });
 
@@ -77,17 +96,40 @@ message:"Hospital Management API Running 🚀"
 
 // API Routes
 
-app.use("/api/auth",authRoutes);
+app.use(
+  "/api/auth",
+  authRoutes
+);
 
-app.use("/api/doctors",doctorRoutes);
 
-app.use("/api/patients",patientRoutes);
+app.use(
+  "/api/doctors",
+  doctorRoutes
+);
 
-app.use("/api/appointments",appointmentRoutes);
 
-app.use("/api/prescriptions",prescriptionRoutes);
+app.use(
+  "/api/patients",
+  patientRoutes
+);
 
-app.use("/api/bills",billRoutes);
+
+app.use(
+  "/api/appointments",
+  appointmentRoutes
+);
+
+
+app.use(
+  "/api/prescriptions",
+  prescriptionRoutes
+);
+
+
+app.use(
+  "/api/bills",
+  billRoutes
+);
 
 
 
@@ -95,14 +137,15 @@ app.use("/api/bills",billRoutes);
 
 // Error Handler
 
-app.use((err,req,res,next)=>{
+app.use(
+(err,req,res,next)=>{
 
 
 console.log(err);
 
 
 res.status(
-err.statusCode || 500
+  err.statusCode || 500
 )
 .json({
 
@@ -120,16 +163,17 @@ err.message || "Server Error"
 
 
 
-const PORT = process.env.PORT || 5000;
+const PORT =
+process.env.PORT || 5000;
 
 
 
-app.listen(PORT,()=>{
-
+app.listen(
+PORT,
+()=>{
 
 console.log(
 `🚀 Server running on port ${PORT}`
 );
-
 
 });
