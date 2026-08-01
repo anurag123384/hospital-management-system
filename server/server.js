@@ -13,6 +13,7 @@ import patientRoutes from "./routes/patientRoutes.js";
 import appointmentRoutes from "./routes/appointmentRoutes.js";
 import prescriptionRoutes from "./routes/prescriptionRoutes.js";
 import billRoutes from "./routes/billRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 
 // Load environment variables
@@ -39,9 +40,9 @@ app.use(
       "https://hospital-management-system-rho-navy.vercel.app"
     ],
 
-    credentials: true,
+    credentials:true,
 
-    methods: [
+    methods:[
       "GET",
       "POST",
       "PUT",
@@ -50,14 +51,13 @@ app.use(
       "OPTIONS"
     ],
 
-    allowedHeaders: [
+    allowedHeaders:[
       "Content-Type",
       "Authorization"
     ]
 
   })
 );
-
 
 
 
@@ -94,7 +94,10 @@ app.get("/",(req,res)=>{
 
 
 
+// ===============================
 // API Routes
+// ===============================
+
 
 app.use(
   "/api/auth",
@@ -129,6 +132,12 @@ app.use(
 app.use(
   "/api/bills",
   billRoutes
+);
+
+
+app.use(
+  "/api/dashboard",
+  dashboardRoutes
 );
 
 
