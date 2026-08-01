@@ -1,135 +1,73 @@
 import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 
 import connectDB from "./config/db.js";
 
 
 // Routes
-
 import authRoutes from "./routes/authRoutes.js";
 import doctorRoutes from "./routes/doctorRoutes.js";
 import patientRoutes from "./routes/patientRoutes.js";
 import appointmentRoutes from "./routes/appointmentRoutes.js";
-import billRoutes from "./routes/billRoutes.js";
 import prescriptionRoutes from "./routes/prescriptionRoutes.js";
-import dashboardRoutes from "./routes/dashboardRoutes.js";
-import doctorDashboardRoutes from "./routes/doctorDashboardRoutes.js";
+import billRoutes from "./routes/billRoutes.js";
 
 
-
+// Load env
 dotenv.config();
-
-
-// MongoDB Connection
-
-connectDB();
-
 
 
 const app = express();
 
 
+// Connect Database
+console.log("🔗 Connecting to MongoDB...");
 
-// =============================
-// Middlewares
-// =============================
+connectDB();
 
+
+
+// Middleware
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    credentials: true,
+
+    origin:[
+      "http://localhost:5173",
+      "https://your-vercel-app.vercel.app"
+    ],
+
+    credentials:true,
+
   })
 );
+
 
 
 app.use(express.json());
 
-
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-
+app.use(express.urlencoded({
+  extended:true
+}));
 
 app.use(cookieParser());
 
 
 
 
-// =============================
-// API Routes
-// =============================
-
-
-app.use(
-  "/api/auth",
-  authRoutes
-);
-
-
-app.use(
-  "/api/doctors",
-  doctorRoutes
-);
-
-
-app.use(
-  "/api/patients",
-  patientRoutes
-);
-
-
-app.use(
-  "/api/appointments",
-  appointmentRoutes
-);
-
-
-app.use(
-  "/api/billing",
-  billRoutes
-);
-
-
-app.use(
-  "/api/prescriptions",
-  prescriptionRoutes
-);
-
-
-app.use(
-  "/api/dashboard",
-  dashboardRoutes
-);
-
-
-app.use(
-  "/api/doctor",
-  doctorDashboardRoutes
-);
-
-
-
-
-
-// =============================
 // Test Route
-// =============================
 
+app.get("/",(req,res)=>{
 
-app.get("/", (req, res) => {
+res.json({
 
-  res.status(200).json({
+success:true,
 
-    success: true,
+message:"Hospital Management API Running 🚀"
 
-    message: "Hospital Management API Running 🚀"
-
-  });
+});
 
 });
 
@@ -137,19 +75,61 @@ app.get("/", (req, res) => {
 
 
 
+// API Routes
 
-// =============================
-// Server Start
-// =============================
+app.use("/api/auth",authRoutes);
+
+app.use("/api/doctors",doctorRoutes);
+
+app.use("/api/patients",patientRoutes);
+
+app.use("/api/appointments",appointmentRoutes);
+
+app.use("/api/prescriptions",prescriptionRoutes);
+
+app.use("/api/bills",billRoutes);
+
+
+
+
+
+// Error Handler
+
+app.use((err,req,res,next)=>{
+
+
+console.log(err);
+
+
+res.status(
+err.statusCode || 500
+)
+.json({
+
+success:false,
+
+message:
+err.message || "Server Error"
+
+});
+
+
+});
+
+
+
 
 
 const PORT = process.env.PORT || 5000;
 
 
-app.listen(PORT, () => {
 
-  console.log(
-    `🚀 Server running on port ${PORT}`
-  );
+app.listen(PORT,()=>{
+
+
+console.log(
+`🚀 Server running on port ${PORT}`
+);
+
 
 });
