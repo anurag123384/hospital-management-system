@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/* ===========================
+   RESET
+=========================== */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(
+    135deg,
+    #020617 0%,
+    #061b45 35%,
+    #0a3d91 70%,
+    #0b5ed7 100%
+  );
+  color: white;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #031226;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
+/* ===========================
+   TEXT SELECTION
+=========================== */
+
+::selection {
+  background: #38bdf8;
+  color: #02111f;
+}
+
+/* ===========================
+   LINKS
+=========================== */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===========================
+   IMAGES
+=========================== */
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+button {
+  cursor: pointer;
+  font: inherit;
+}
+
+/* ===========================
+   FORM ELEMENTS
+=========================== */
+
+input,
+textarea,
+select {
+  font: inherit;
+  outline: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+/* ===========================
+   SMOOTH TRANSITIONS
+=========================== */
+
+* {
+  transition:
+    background-color .25s ease,
+    color .25s ease,
+    border-color .25s ease,
+    transform .25s ease;
+}
