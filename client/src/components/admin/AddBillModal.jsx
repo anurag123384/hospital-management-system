@@ -12,7 +12,6 @@ function AddBillModal({
 }) {
 
 
-
 const [loading,setLoading] = useState(false);
 
 
@@ -23,19 +22,14 @@ patient:"",
 doctor:"",
 
 consultationFee:"",
-
 medicineCharges:"",
-
 testCharges:"",
-
 roomCharges:"",
-
 otherCharges:"",
 
 paymentStatus:"Unpaid"
 
 });
-
 
 
 
@@ -76,11 +70,12 @@ setLoading(true);
 
 const res = await api.post(
 
-"/billing",
+"/bills",
 
 formData
 
 );
+
 
 
 
@@ -101,13 +96,17 @@ onClose();
 }
 
 
+
 }
 catch(error){
 
 
 console.log(
+
 "Bill Error:",
+
 error.response?.data || error
+
 );
 
 
@@ -132,6 +131,8 @@ setLoading(false);
 
 
 };
+
+
 
 
 
@@ -213,9 +214,13 @@ text-white
 
 >
 
+
 <option value="">
+
 Select Patient
+
 </option>
+
 
 
 {
@@ -249,7 +254,6 @@ value={patient._id}
 
 
 
-
 <select
 
 name="doctor"
@@ -269,9 +273,13 @@ text-white
 
 >
 
+
 <option value="">
+
 Select Doctor
+
 </option>
+
 
 
 {
@@ -298,6 +306,7 @@ Dr. {doctor.name}
 
 
 </select>
+
 
 
 
@@ -377,12 +386,16 @@ text-white
 
 
 <option value="Unpaid">
+
 Unpaid
+
 </option>
 
 
 <option value="Paid">
+
 Paid
+
 </option>
 
 
@@ -417,6 +430,7 @@ text-black
 
 >
 
+
 {
 
 loading
@@ -433,6 +447,8 @@ loading
 
 
 </button>
+
+
 
 
 
@@ -461,6 +477,8 @@ Cancel
 
 
 </div>
+
+
 
 
 

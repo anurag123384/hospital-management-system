@@ -1,54 +1,37 @@
-import { 
+import {
   useEffect,
   useMemo,
   useRef,
   useState
 } from "react";
 
-
 import toast from "react-hot-toast";
 
-
-import { 
-  useReactToPrint 
+import {
+  useReactToPrint
 } from "react-to-print";
 
-
 import jsPDF from "jspdf";
-
 import html2canvas from "html2canvas";
-
-
 
 import api from "../../services/api";
 
 
-
 import AddBillModal from "../../components/admin/AddBillModal";
-
 import EditBillModal from "../../components/admin/EditBillModal";
-
 import ViewBillModal from "../../components/admin/ViewBillModal";
-
 import Invoice from "../../components/admin/Invoice";
 
 
-
-
 import {
-
-FaPlus,
-FaSearch,
-FaTrash,
-FaEdit,
-FaEye,
-FaPrint,
-FaFilePdf
-
+  FaPlus,
+  FaSearch,
+  FaTrash,
+  FaEdit,
+  FaEye,
+  FaPrint,
+  FaFilePdf
 } from "react-icons/fa";
-
-
-
 
 
 
@@ -92,7 +75,6 @@ const invoiceRef = useRef(null);
 
 
 
-
 const handlePrint = useReactToPrint({
 
 content:()=>invoiceRef.current
@@ -105,28 +87,22 @@ content:()=>invoiceRef.current
 
 
 
-
-
 const downloadPDF = async()=>{
 
 
 if(!selectedBill){
 
-
 toast.error(
 "Please select bill"
 );
 
-
 return;
-
 
 }
 
 
 
 const element = invoiceRef.current;
-
 
 
 const canvas = await html2canvas(element);
@@ -151,44 +127,33 @@ const imgWidth = 190;
 
 
 const imgHeight =
-
 (
 canvas.height * imgWidth
 )
-
 /
-
 canvas.width;
 
 
 
 pdf.addImage(
-
 imgData,
-
 "PNG",
-
 10,
-
 10,
-
 imgWidth,
-
 imgHeight
-
 );
 
 
 
 pdf.save(
-
 `${selectedBill.billNumber}.pdf`
-
 );
 
 
 
 };
+
 
 
 
@@ -208,11 +173,9 @@ const res = await api.get(
 );
 
 
-
 setPatients(
 res.data.patients || []
 );
-
 
 
 }
@@ -224,7 +187,6 @@ console.log(error);
 
 
 };
-
 
 
 
@@ -243,11 +205,9 @@ const res = await api.get(
 );
 
 
-
 setDoctors(
 res.data.doctors || []
 );
-
 
 
 }
@@ -266,7 +226,6 @@ console.log(error);
 
 
 
-
 const fetchBills = async()=>{
 
 
@@ -278,7 +237,7 @@ setLoading(true);
 
 
 const res = await api.get(
-"/billing"
+"/bills"
 );
 
 
@@ -294,6 +253,7 @@ catch(error){
 
 
 console.log(error);
+
 
 
 toast.error(
@@ -321,6 +281,7 @@ setLoading(false);
 
 
 
+
 useEffect(()=>{
 
 
@@ -340,6 +301,7 @@ fetchBills();
 
 
 
+
 const deleteBill = async(id)=>{
 
 
@@ -347,7 +309,9 @@ try{
 
 
 await api.delete(
-`/billing/${id}`
+
+`/bills/${id}`
+
 );
 
 
@@ -369,15 +333,24 @@ catch(error){
 console.log(error);
 
 
+
 toast.error(
 "Delete failed"
 );
+
 
 
 }
 
 
 };
+
+
+
+
+
+
+
 const filteredBills = useMemo(()=>{
 
 
@@ -395,14 +368,18 @@ bill.billNumber
 .includes(keyword)
 
 
+
 ||
+
 
 bill.patient?.name
 ?.toLowerCase()
 .includes(keyword)
 
 
+
 ||
+
 
 bill.doctor?.name
 ?.toLowerCase()
@@ -412,10 +389,12 @@ bill.doctor?.name
 );
 
 
+
 });
 
 
 },[bills,search]);
+
 
 
 
@@ -437,6 +416,7 @@ sum + Number(bill.totalAmount || 0),
 
 
 
+
 const paidBills = bills.filter(
 
 (bill)=>
@@ -444,17 +424,7 @@ const paidBills = bills.filter(
 bill.paymentStatus==="Paid"
 
 ).length;
-
-
-
-
-
-
-
-
-
 return(
-
 
 <div className="
 min-h-screen
@@ -528,8 +498,8 @@ Generate Bill
 </button>
 
 
-</div>
 
+</div>
 
 
 
@@ -544,6 +514,8 @@ grid
 gap-5
 md:grid-cols-3
 ">
+
+
 
 
 
@@ -574,6 +546,7 @@ font-bold
 
 
 </div>
+
 
 
 
@@ -614,6 +587,7 @@ text-blue-600
 
 
 
+
 <div className="
 rounded-xl
 bg-white
@@ -642,6 +616,8 @@ text-green-600
 
 
 </div>
+
+
 
 
 
@@ -689,6 +665,7 @@ py-3
 />
 
 
+
 </div>
 
 
@@ -710,6 +687,7 @@ shadow
 <table className="
 w-full
 ">
+
 
 
 <thead className="
@@ -761,8 +739,8 @@ Action
 
 
 
-<tbody>
 
+<tbody>
 
 
 {
@@ -773,8 +751,11 @@ loading ?
 <tr>
 
 <td
+
 colSpan="6"
+
 className="p-8 text-center"
+
 >
 
 Loading...
@@ -811,13 +792,11 @@ hover:bg-slate-50
 
 
 
-
 <td className="p-3">
 
 {bill.patient?.name || "N/A"}
 
 </td>
-
 
 
 
@@ -831,13 +810,11 @@ Dr. {bill.doctor?.name || "N/A"}
 
 
 
-
 <td className="p-3 font-bold">
 
 ₹{bill.totalAmount}
 
 </td>
-
 
 
 
@@ -866,6 +843,7 @@ gap-2
 
 
 
+
 <button
 
 onClick={()=>{
@@ -888,7 +866,6 @@ text-white
 <FaEye/>
 
 </button>
-
 
 
 
@@ -930,7 +907,6 @@ text-white
 
 
 
-
 <button
 
 onClick={()=>{
@@ -965,7 +941,6 @@ text-white
 
 
 
-
 <button
 
 onClick={()=>{
@@ -988,6 +963,7 @@ text-white
 <FaEdit/>
 
 </button>
+
 
 
 
@@ -1047,6 +1023,8 @@ text-white
 
 
 
+
+
 <div className="hidden">
 
 
@@ -1058,7 +1036,6 @@ text-white
 selectedBill &&
 
 <Invoice bill={selectedBill}/>
-
 
 }
 
@@ -1077,9 +1054,7 @@ selectedBill &&
 
 
 {
-
 showAddModal &&
-
 
 <AddBillModal
 
@@ -1093,7 +1068,6 @@ refreshBills={fetchBills}
 
 />
 
-
 }
 
 
@@ -1104,17 +1078,12 @@ refreshBills={fetchBills}
 
 
 {
-
 showEditModal && selectedBill &&
 
 
 <EditBillModal
 
 bill={selectedBill}
-
-patients={patients}
-
-doctors={doctors}
 
 onClose={()=>{
 
@@ -1139,7 +1108,6 @@ refreshBills={fetchBills}
 
 
 {
-
 showViewModal && selectedBill &&
 
 
@@ -1157,7 +1125,6 @@ setSelectedBill(null);
 
 />
 
-
 }
 
 
@@ -1168,11 +1135,11 @@ setSelectedBill(null);
 
 </div>
 
-
 );
 
 
 }
+
 
 
 export default AdminBilling;
