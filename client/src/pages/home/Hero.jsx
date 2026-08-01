@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 
 import { useAuth } from "../../context/AuthContext";
 
@@ -10,28 +9,7 @@ function Hero(){
 const navigate = useNavigate();
 
 
-const { user, logout } = useAuth();
-
-
-
-
-
-const handleLogout = ()=>{
-
-
-logout();
-
-
-toast.success(
-"Logout Successfully"
-);
-
-
-navigate("/login");
-
-
-};
-
+const { user } = useAuth();
 
 
 
@@ -64,9 +42,12 @@ navigate("/patient");
 
 
 
+
 return (
 
+
 <section
+
 className="
 relative
 overflow-hidden
@@ -79,10 +60,12 @@ pb-32
 lg:min-h-screen
 lg:pt-24
 "
+
 >
 
 
 <div
+
 className="
 absolute
 -top-32
@@ -93,11 +76,13 @@ rounded-full
 bg-blue-600/20
 blur-[160px]
 "
+
 />
 
 
 
 <div
+
 className="
 absolute
 bottom-0
@@ -108,7 +93,9 @@ rounded-full
 bg-cyan-400/20
 blur-[150px]
 "
+
 />
+
 
 
 
@@ -120,6 +107,8 @@ blur-[150px]
 
 
 
+
+
 {/* LEFT CONTENT */}
 
 
@@ -127,6 +116,7 @@ blur-[150px]
 
 
 <span
+
 className="
 inline-flex
 rounded-full
@@ -139,6 +129,7 @@ text-sm
 text-cyan-300
 backdrop-blur-xl
 "
+
 >
 
 🏥 Welcome To MediCare Hospital
@@ -148,7 +139,9 @@ backdrop-blur-xl
 
 
 
+
 <h1
+
 className="
 mt-7
 text-4xl
@@ -158,6 +151,7 @@ text-white
 sm:text-5xl
 lg:text-6xl
 "
+
 >
 
 Your Health,
@@ -176,7 +170,9 @@ Our Priority
 
 
 
+
 <p
+
 className="
 mt-6
 max-w-xl
@@ -185,6 +181,7 @@ leading-7
 text-blue-100
 sm:text-lg
 "
+
 >
 
 Experience world-class healthcare with highly qualified doctors,
@@ -206,9 +203,6 @@ We are committed to providing compassionate care for every patient.
 user ?
 
 
-<>
-
-
 <button
 
 onClick={goDashboard}
@@ -228,34 +222,6 @@ hover:bg-cyan-300
 Go Dashboard
 
 </button>
-
-
-
-
-
-<button
-
-onClick={handleLogout}
-
-className="
-rounded-xl
-bg-red-600
-px-7
-py-3
-font-bold
-text-white
-hover:bg-red-700
-"
-
->
-
-Logout
-
-</button>
-
-
-</>
-
 
 
 :
@@ -283,6 +249,7 @@ hover:bg-cyan-300
 Book Appointment
 
 </Link>
+
 
 
 
@@ -316,10 +283,19 @@ Find Doctor
 }
 
 
+
 </div>
+
+
+
+
+
+
 {/* Stats */}
 
+
 <div
+
 className="
 mt-10
 grid
@@ -327,10 +303,12 @@ grid-cols-2
 gap-4
 md:grid-cols-4
 "
+
 >
 
 
 {
+
 
 [
 ["50+","Doctors"],
@@ -358,11 +336,15 @@ backdrop-blur-xl
 >
 
 
-<h2 className="
+<h2
+
+className="
 text-3xl
 font-bold
 text-cyan-300
-">
+"
+
+>
 
 {item[0]}
 
@@ -370,10 +352,14 @@ text-cyan-300
 
 
 
-<p className="
+<p
+
+className="
 text-sm
 text-blue-100
-">
+"
+
+>
 
 {item[1]}
 
@@ -389,7 +375,9 @@ text-blue-100
 }
 
 
+
 </div>
+
 
 
 
@@ -410,6 +398,7 @@ text-blue-100
 
 
 <div
+
 className="
 relative
 flex
@@ -417,10 +406,12 @@ justify-center
 mt-4
 lg:mt-0
 "
+
 >
 
 
 <div
+
 className="
 absolute
 h-[350px]
@@ -429,6 +420,7 @@ rounded-full
 bg-cyan-400/20
 blur-[130px]
 "
+
 />
 
 
@@ -460,8 +452,8 @@ lg:h-[560px]
 
 
 
-
 {/* Experience */}
+
 
 
 <div
@@ -512,9 +504,7 @@ Years Experience
 
 
 
-
 {/* Rating */}
-
 
 
 <div
@@ -535,21 +525,29 @@ backdrop-blur-xl
 >
 
 
-<h3 className="
+<h3
+
+className="
 text-2xl
 font-bold
 text-cyan-300
-">
+"
+
+>
 
 ⭐ 4.9
 
 </h3>
 
 
-<p className="
+<p
+
+className="
 text-xs
 text-blue-100
-">
+"
+
+>
 
 Patient Rating
 
@@ -562,17 +560,15 @@ Patient Rating
 
 
 
-
 </div>
 
 
 
 
 
+
+
 </div>
-
-
-
 
 
 </div>
